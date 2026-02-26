@@ -27,7 +27,7 @@ A full-stack **Bookmark Manager** application with a RESTful API and a sleek, mo
 
 ---
 
-## 🚀 Setup & Running
+## 🚀 Setup & Running Locally
 
 ### Prerequisites
 
@@ -148,29 +148,92 @@ bookmark-manager/
 
 ---
 
-## 🌐 Deployment Options
+## 🌐 Deployment
 
-### Option A: Railway (Recommended — Free Tier)
+### ⭐ Option A: Replit (Recommended — Easiest & Free)
+
+Replit requires **no git, no CLI, no Docker** — just upload and run.
+
+#### Steps
+
+1. **Create a free account** at [replit.com](https://replit.com)
+
+2. **Create a new Repl**
+   - Click **+ Create Repl**
+   - Choose template: **Python**
+   - Name it: `bookmark-manager`
+   - Click **Create Repl**
+
+3. **Upload your project files**
+   - In the left sidebar, click the **three dots (⋮)** next to Files
+   - Click **Upload folder** and select your project folder  
+   *(or upload files one by one into the correct folders)*
+
+4. **Set the run command**
+   - Click the `.replit` file in the sidebar
+   - Set the `run` field to:
+     ```
+     python3 run.py
+     ```
+
+5. **Click the Run ▶ button**
+   - Your app starts and a live preview appears on the right
+   - The SQLite database is auto-created and **persists across restarts** — no setup needed
+
+6. **Get your public URL**
+   - Click the **open in new tab ↗** icon at the top of the preview pane
+   - Your URL looks like: `https://bookmark-manager.YOUR-USERNAME.repl.co`
+   - Share this URL with anyone!
+
+7. **Keep it awake for free (optional)**
+   - Replit free tier sleeps after ~30 mins of inactivity
+   - Go to [uptimerobot.com](https://uptimerobot.com) → free account
+   - Add a new **HTTP monitor** with your Replit URL, ping every **5 minutes**
+   - Your app will never sleep again ✅
+
+> 💡 **Why Replit?** SQLite works out of the box with no volume configuration, there's no CLI or git required, and you get a live public URL in under 5 minutes.
+
+---
+
+### Option B: Railway
+
 1. Push code to GitHub
 2. Go to [railway.app](https://railway.app) → New Project → Deploy from GitHub
 3. Set **Start Command**: `python3 run.py`
-4. Railway auto-assigns a public URL
+4. Add a **Volume** mounted at `/data` for persistent database storage
+5. Set environment variable: `DB_PATH=/data/bookmarks.db`
+6. Railway auto-assigns a public URL
 
-### Option B: Render
+---
+
+### Option C: Render
+
 1. Push to GitHub
 2. New Web Service → Connect repo
 3. **Build Command**: *(leave empty)*
 4. **Start Command**: `python3 run.py`
-5. Free tier available
+5. Add a **Disk** mounted at `/data` (1 GB)
+6. Set environment variable: `DB_PATH=/data/bookmarks.db`
 
-### Option C: Fly.io
+> ⚠️ Free tier spins down after 15 min of inactivity — first request after sleep takes ~30s.
+
+---
+
+### Option D: Fly.io
+
 ```bash
 # Install flyctl, then:
+flyctl auth login
 flyctl launch
+flyctl volumes create markd_data --size 1 --region sin
+flyctl secrets set DB_PATH=/data/bookmarks.db
 flyctl deploy
 ```
 
-### Option D: VPS / Any Server
+---
+
+### Option E: VPS / Any Server
+
 ```bash
 # On your server:
 git clone <repo>
@@ -207,9 +270,7 @@ curl -X DELETE http://localhost:5000/api/bookmarks/<id>
 
 The app features a dark brutalist-minimal design with:
 - Lime-green accent (`#c8ff00`) for actions
-- Cyan accent (`#00d4ff`) for edit states  
+- Cyan accent (`#00d4ff`) for edit states
 - Red accent (`#ff6b6b`) for destructive actions
 - `Syne` display font + `DM Mono` for body text
 - Subtle animated glow orbs and noise texture overlay
-
-
