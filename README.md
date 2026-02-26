@@ -274,3 +274,4 @@ The app features a dark brutalist-minimal design with:
 - Red accent (`#ff6b6b`) for destructive actions
 - `Syne` display font + `DM Mono` for body text
 - Subtle animated glow orbs and noise texture overlay
+Live URL : https://bookmark-manager--vishalaryadeshp.replit.app/
